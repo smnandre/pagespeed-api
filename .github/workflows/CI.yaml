@@ -120,6 +120,6 @@ jobs:
       - name: "Composer: install"
         run: composer install --prefer-dist --no-progress --no-suggest
       - name: "PHPUnit: version"
-        run: ./vendor/bin/phpunit --version
+        run: vendor/bin/phpunit --version
       - name: "PHPUnit: tests"
-        run: ./vendor/bin/phpunit
+        run: vendor/bin/phpunit
