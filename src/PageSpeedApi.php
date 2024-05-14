@@ -33,28 +33,44 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
         $this->client = $client ?? HttpClient::create();
     }
 
-    public function analyse(string $url, ?Strategy $strategy = null, ?string $locale = null, array $category = []): Analysis
+    public function analyse(string $url, Strategy|string|null $strategy = null, ?string $locale = null, array $categories = []): Analysis
     {
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
             throw new \InvalidArgumentException('Invalid URL provided.');
         }
 
-        // PageSpeed API uses multiple category parameters
-        $category = array_map(fn (Category $cat) => strtoupper(str_replace('-', '_', $cat->value)), Category::cases());
-
-
-        $cache = __DIR__ . '/../tests/cache/cache-' . urlencode(str_replace(['://', '.'], '-', $url)) . $strategy?->value. '.json';
-        if (file_exists($cache)) {
-            /** @phpstan-ignore-next-line */
-            return  Analysis::create(json_decode(file_get_contents($cache), true, 512, JSON_THROW_ON_ERROR));
+        if (is_string($strategy)) {
+            if (!in_array($strategy, Strategy::values())) {
+                throw new \InvalidArgumentException(sprintf('Invalid strategy "%s" provided.', $strategy));
+            }
+            $strategy = Strategy::from($strategy);
         }
+
+        if ($locale && !preg_match('/^[a-z]{2}(_[A-Z]{2})?$/', $locale)) {
+            throw new \InvalidArgumentException(sprintf('Invalid locale "%s" provided.', $locale));
+        }
+
+        foreach ($categories as $i => $category) {
+            if (!$category instanceof Category) {
+                if (!in_array($category, Strategy::values())) {
+                    throw new \InvalidArgumentException(sprintf('Invalid category "%s" provided.', $category));
+                }
+                $categories[$i] = Category::from($category);
+            }
+        }
+        if([] === $categories = array_unique($categories)) {
+            $categories = Category::cases();
+        }
+
+        // PageSpeed API uses multiple category parameters
+        $category =  array_map(fn (Category $cat) => strtoupper(str_replace('-', '_', $cat->value)), $categories);
 
         $response = $this->get('runPagespeed?category='.implode('&category=', $category), [
             'url' => $url,
             'strategy' => $strategy?->value,
+            'locale' => $locale,
+            'category' => $category,
         ]);
-
-        file_put_contents($cache, json_encode($response));
 
         return Analysis::create($response);
     }
@@ -75,13 +91,13 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
             'headers' => [
                 'Accept' => 'application/json',
                 'User-Agent' => 'PageSpeed.md',
-                'X-PageSpeed-Api' => self::BASE_URI
+                'X-PageSpeed-Api' => self::BASE_URI,
             ],
         ]);
 
-        // if (200 !== $response->getStatusCode()) {
-        //     throw new \RuntimeException('An error occurred while fetching the data.', $response->getStatusCode(), $response->getContent());
-        // }
+        if (200 !== $response->getStatusCode()) {
+            throw new \RuntimeException('Unexpected response code "%s" returned by PageSpeed Api.', $response->getStatusCode());
+        }
 
         return $response->toArray();
     }

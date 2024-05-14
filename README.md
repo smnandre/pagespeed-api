@@ -3,18 +3,26 @@
 This library provides a simple way to interact with the Google PageSpeed Insights API.
 
 ```php
-use PageSpeed\Api\PageSpeedApi;
+use PageSpeed\Api\Analysis\Category;use PageSpeed\Api\PageSpeedApi;
 
 $api = new PageSpeedApi('YOUR_API');
 
-$audit = $api->audit('https://www.example.com');
+$analysis = $api->analyse('https://www.example.com');
 
-echo $audit->getScore(); // 100
-echo $audit->performanceScore(); // 100
-echo $audit->getAccessibilityScore(); // 100
+// LightHouse scores
+echo $audit->getPerformancesScore(); // 100
+echo $audit->getAccessibilityScore(); // 88
 echo $audit->getBestPracticesScore(); // 100
-```
+echo $audit->getSeoScore(); // 90
 
+// Loading Experience metrics
+echo $audit->getLargestContentfulPaint(); // 
+echo $audit->getInteractiveToNextPaint(); // 
+echo $audit->getCumulativeLayoutShift(); // 
+echo $audit->getFirstContentfulPaint(); // 
+echo $audit->getFirstInputDelay(); // 
+echo $audit->getTimeToFirstByte(); // 
+```
 
 ## Installation
 
@@ -33,15 +41,34 @@ use PageSpeed\Api\PageSpeedApi;
 $api = new PageSpeedApi('YOUR_API');
 ```
 
-### Audit Strategy	
+### Parameters
+
+#### Audit Strategy	
 
 ```php
 // Mobile strategy (default)
-$audit = $api->audit('https://example.com/', 'mobile');
+$audit = $api->analyse('https://example.com/', 'mobile');
 
 // Desktop strategy
-$audit = $api->audit('https://example.com/', 'desktop');
+$audit = $api->analyse('https://example.com/', 'desktop');
 ```
+
+#### Analysis Categories
+
+
+### Response 
+
+#### Analysis
+
+
+#### Loading Experience
+
+
+#### Original Loading Experience
+
+.. 
+
+#### Lighthouse
 
 ```php
 use PageSpeed\Api\PageSpeedApi;

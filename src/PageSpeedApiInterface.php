@@ -19,7 +19,7 @@ use PageSpeed\Api\Analysis\Strategy;
 interface PageSpeedApiInterface
 {
     /**
-     * @param list<Category> $category
+     * @param list<Category> $categories
      */
-    public function analyse(string $url, ?Strategy $strategy = null, ?string $locale = null, array $category = []): Analysis;
+    public function analyse(string $url, ?Strategy $strategy = null, ?string $locale = null, array $categories = []): Analysis;
 }
