@@ -1,28 +1,6 @@
 # PageSeed Api
 
-This library provides a simple way to interact with the Google PageSpeed Insights API.
-
-```php
-use PageSpeed\Api\Analysis\Category;use PageSpeed\Api\PageSpeedApi;
-
-$api = new PageSpeedApi('YOUR_API');
-
-$analysis = $api->analyse('https://www.example.com');
-
-// LightHouse scores
-echo $audit->getPerformancesScore(); // 100
-echo $audit->getAccessibilityScore(); // 88
-echo $audit->getBestPracticesScore(); // 100
-echo $audit->getSeoScore(); // 90
-
-// Loading Experience metrics
-echo $audit->getLargestContentfulPaint(); // 
-echo $audit->getInteractiveToNextPaint(); // 
-echo $audit->getCumulativeLayoutShift(); // 
-echo $audit->getFirstContentfulPaint(); // 
-echo $audit->getFirstInputDelay(); // 
-echo $audit->getTimeToFirstByte(); // 
-```
+Google PageSpeed Insights API wrapper for PHP.
 
 ## Installation
 
@@ -32,54 +10,49 @@ composer require smnandre/pagespeed-api
 
 ## Usage
 
-
-### PageSpeed Api Key
+### Run an analysis
 
 ```php
-use PageSpeed\Api\PageSpeedApi;
+use PageSpeed\Api\Analysis\Category;use PageSpeed\Api\PageSpeedApi;
 
 $api = new PageSpeedApi('YOUR_API');
+
+$analysis = $api->analyse('https://www.example.com');
+```
+
+### Get the results
+
+```php
+
+// LightHouse scores
+$analysis->getAuditScores();
+// 'performance' => 100,
+// 'accessibility' => 88,
+// 'best-practices' => 100,
+// 'seo' => 90
+
+// Loading Experience metrics
+$analysis->getLoadingMetrics();
+
+// Origin Loading Experience metrics
+$analysis->getOriginalLoadingMetrics();
 ```
 
 ### Parameters
 
-#### Audit Strategy	
+#### Strategy	
 
 ```php
 // Mobile strategy (default)
-$audit = $api->analyse('https://example.com/', 'mobile');
+$analysis = $api->analyse('https://example.com/', 'mobile');
 
 // Desktop strategy
-$audit = $api->analyse('https://example.com/', 'desktop');
+$analysis = $api->analyse('https://example.com/', 'desktop');
 ```
 
-#### Analysis Categories
-
-
-### Response 
-
-#### Analysis
-
-
-#### Loading Experience
-
-
-#### Original Loading Experience
-
-.. 
-
-#### Lighthouse
+#### Locale
 
 ```php
-use PageSpeed\Api\PageSpeedApi;
-
-$api = new PageSpeedApi();
-
-$audit = $api->audit('https://www.example.com');
-
-echo $audit->getScore();
-echo $audit->performanceScore();
-echo $audit->getAccessibilityScore();
-echo $audit->getBestPracticesScore();
-echo $audit->getSeoScore();
+$analysis = $api->analyse('https://example.com/', 'mobile', 'fr');
 ```
+

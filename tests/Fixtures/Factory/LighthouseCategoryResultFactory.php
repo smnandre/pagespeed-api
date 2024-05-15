@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace PageSpeed\Api\Tests\Fixtures;
+namespace PageSpeed\Api\Tests\Fixtures\Factory;
 
 class LighthouseCategoryResultFactory
 {

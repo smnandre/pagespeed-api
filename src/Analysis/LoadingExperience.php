@@ -18,7 +18,7 @@ use Webmozart\Assert\Assert;
 final readonly class LoadingExperience
 {
     /**
-     * @param array<string, mixed> $metrics
+     * @param array<string, array<string, mixed>> $metrics
      */
     public function __construct(
         public string $id,
@@ -51,5 +51,14 @@ final readonly class LoadingExperience
             $values['overall_category'],
             $values['initial_url'],
         );
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getMetrics(): array
+    {
+        /** @phpstan-ignore-next-line */
+        return array_map(fn (array $metric) => $metric['category'], $this->metrics);
     }
 }

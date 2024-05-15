@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace PageSpeed\Api\Tests\Unit;
 
+use PageSpeed\Api\Tests\Fixtures\Factory\AnalysisFactory;
+use PageSpeed\Api\Tests\Fixtures\Factory\LighthouseCategoryResultFactory;
 use PageSpeed\Api\Analysis;
-use PageSpeed\Api\Tests\Fixtures\AnalysisFactory;
-use PageSpeed\Api\Tests\Fixtures\LighthouseCategoryResultFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

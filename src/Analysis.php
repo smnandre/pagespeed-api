@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace PageSpeed\Api;
 
+use DateTimeImmutable;
 use PageSpeed\Api\Analysis\LighthouseResult;
 use PageSpeed\Api\Analysis\LoadingExperience;
 use Webmozart\Assert\Assert;
@@ -65,11 +66,37 @@ final readonly class Analysis
         );
     }
 
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
     /**
      * @return array<string, int>
      */
     public function getAuditScores(): array
     {
         return $this->lighthouseResult->getScores();
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function getLoadingMetrics(): ?array
+    {
+        return $this->loadingExperience?->getMetrics();
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function getOriginalLoadingMetrics(): ?array
+    {
+        return $this->originLoadingExperience?->getMetrics();
+    }
+
+    public function getAnalysisUtcDateTime(): DateTimeImmutable
+    {
+        return new DateTimeImmutable($this->analysisUTCTimestamp);
     }
 }

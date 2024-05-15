@@ -11,9 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace PageSpeed\Api\Tests\Fixtures;
+namespace PageSpeed\Api\Tests\Fixtures\Factory;
 
-class EnvironmentFactory
+class ConfigSettingsFactory
 {
     /**
      * @param array<string, mixed> $parameters
@@ -22,9 +22,13 @@ class EnvironmentFactory
     public static function createData(array $parameters): array
     {
         $data = [
-            'networkUserAgent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36',
-            'hostUserAgent' => 'Webkit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36',
-            'benchmarkIndex' => 42,
+            'onlyCategories' => [
+                'seo',
+                'pwa',
+            ],
+            'locale' => 'en',
+            'formFactor' => 'desktop',
+            'channel' => 'foo',
         ];
 
         return array_replace_recursive($data, $parameters);

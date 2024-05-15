@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace PageSpeed\Api\Tests\Unit;
 
 use PageSpeed\Api\Analysis;
+use PageSpeed\Api\AnalysisSummary;
 use PageSpeed\Api\PageSpeedApi;
-use PageSpeed\Api\Tests\Fixtures\AnalysisFactory;
-use PageSpeed\Api\Tests\Fixtures\LighthouseCategoryResultFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +27,7 @@ class PageSpeedApiTest extends TestCase
 {
     public function testAnalysis(): void
     {
-        $response = JsonMockResponse::fromFile(__DIR__.'/../Fixtures/response.json');
+        $response = JsonMockResponse::fromFile(__DIR__.'/../Fixtures/response/example.com.json');
         $api = new PageSpeedApi('API_KEY', new MockHttpClient($response));
 
         $analysis = $api->analyse('https://example.com');
@@ -36,15 +35,22 @@ class PageSpeedApiTest extends TestCase
         self::assertInstanceOf(Analysis::class, $analysis);
     }
 
+    /**
+     * @param list<mixed> $parameters
+     */
     #[DataProvider('provideInvalidParameters')]
     public function testAnalysisInvalidParameters(array $parameters): void
     {
         $api = new PageSpeedApi();
         self::expectException(\InvalidArgumentException::class);
 
+        /** @phpstan-ignore-next-line */
         $api->analyse(...$parameters);
     }
 
+    /**
+     * @return iterable<string, array<mixed>> $parameters
+     */
     public static function provideInvalidParameters(): iterable
     {
         yield 'invalid_url' => [['https://']];
