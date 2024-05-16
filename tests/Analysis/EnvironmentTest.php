@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace PageSpeed\Api\Tests\Unit\Audit;
+namespace PageSpeed\Api\Tests\Analysis;
 
 use PageSpeed\Api\Analysis\Environment;
 use PHPUnit\Framework\Attributes\CoversClass;

@@ -18,8 +18,9 @@ use Webmozart\Assert\Assert;
 final readonly class LighthouseResult
 {
     /**
-     * @param array<string, mixed> $categoryGroups
-     * @param array<string, LighthouseCategoryResult> $categories
+     * @param array<string, CategoryGroup> $categoryGroups
+     * @param array<string, Audit> $audits
+     * @param array<string, CategoryResult> $categories
      */
     public function __construct(
         public string $requestedUrl,
@@ -27,6 +28,7 @@ final readonly class LighthouseResult
         public string $lighthouseVersion,
         public array $categoryGroups,
         public array $categories,
+        public array $audits,
         public Environment $environment,
         public ConfigSettings $configSettings,
     ) {
@@ -52,18 +54,28 @@ final readonly class LighthouseResult
         Assert::keyExists($values, 'categories');
         Assert::isArray($values['categories']);
 
+        Assert::keyExists($values, 'audits');
+        Assert::isArray($values['audits']);
+
         Assert::keyExists($values, 'environment');
         Assert::isArray($values['environment']);
 
         Assert::keyExists($values, 'configSettings');
         Assert::isArray($values['configSettings']);
 
+        $categoryGroups = [];
+        foreach ($values['categoryGroups'] as $id => $group) {
+            Assert::isArray($group);
+            $categoryGroups[$id] = ['id' => $id, ...$group];
+        }
+
         return new self(
             $values['requestedUrl'],
             $values['finalUrl'],
             $values['lighthouseVersion'],
-            $values['categoryGroups'],
-            array_map(LighthouseCategoryResult::create(...), $values['categories']),
+            array_map(CategoryGroup::create(...), $categoryGroups),
+            array_map(CategoryResult::create(...), $values['categories']),
+            array_map(Audit::create(...), $values['audits']),
             Environment::create($values['environment']),
             ConfigSettings::create($values['configSettings']),
         );
@@ -74,6 +86,6 @@ final readonly class LighthouseResult
      */
     public function getScores(): array
     {
-        return array_map(fn (LighthouseCategoryResult $res) => (int) (100 * $res->score), $this->categories);
+        return array_map(fn (CategoryResult $res) => (int)(100 * $res->score), $this->categories);
     }
 }

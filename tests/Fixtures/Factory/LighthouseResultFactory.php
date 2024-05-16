@@ -30,9 +30,9 @@ class LighthouseResultFactory
                 'performance' => [
                     'title' => 'Performance',
                     'description' => 'Description',
-                    'score' => 0.9,
                 ],
             ],
+            'audits' => [],
             'categories' => [
                 'performance' => LighthouseCategoryResultFactory::createData([]),
             ],

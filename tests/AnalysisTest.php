@@ -11,11 +11,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace PageSpeed\Api\Tests\Unit;
+namespace PageSpeed\Api\Tests;
 
+use PageSpeed\Api\Analysis;
 use PageSpeed\Api\Tests\Fixtures\Factory\AnalysisFactory;
 use PageSpeed\Api\Tests\Fixtures\Factory\LighthouseCategoryResultFactory;
-use PageSpeed\Api\Analysis;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -29,10 +29,12 @@ class AnalysisTest extends TestCase
                 'categories' => [
                     'performance' =>  LighthouseCategoryResultFactory::createData([
                         'id' => 'performance',
+                        'title' => 'Performance',
                         'score' => 0.9,
                     ]),
                     'accessibility' =>  LighthouseCategoryResultFactory::createData([
                         'id' => 'accessibility',
+                        'title' => 'Performance',
                         'score' => 0.95,
                     ]),
                 ],

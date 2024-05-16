@@ -18,13 +18,14 @@ use Webmozart\Assert\Assert;
 final readonly class LoadingExperience
 {
     /**
-     * @param array<string, array<string, mixed>> $metrics
+     * @param array<string, Metric> $metrics
      */
     public function __construct(
         public string $id,
         public array $metrics,
         public string $overallCategory,
         public string $initialUrl,
+        public ?bool $originFallback,
     ) {
     }
 
@@ -45,11 +46,25 @@ final readonly class LoadingExperience
         Assert::keyExists($values, 'initial_url');
         Assert::string($values['initial_url']);
 
+        $values['origin_fallback'] ??= null;
+        Assert::keyExists($values, 'origin_fallback');
+        Assert::nullOrBoolean($values['origin_fallback']);
+
+        $metrics = [];
+        foreach ($values['metrics'] as $id => $metric) {
+            if (!is_array($metric)) {
+                dd($values);
+            }
+            Assert::isArray($metric);
+            $metrics[$id] = ['id' => $id, ...$metric];
+        }
+
         return new self(
             $values['id'],
-            $values['metrics'],
+            array_map(Metric::create(...), $metrics),
             $values['overall_category'],
             $values['initial_url'],
+            $values['origin_fallback'],
         );
     }
 

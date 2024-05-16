@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace PageSpeed\Api\Tests\Unit\Audit;
+namespace PageSpeed\Api\Tests\Analysis;
 
 use PageSpeed\Api\Analysis\LoadingExperience;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -24,7 +24,11 @@ class LoadingExperienceTest extends TestCase
     {
         $values = [
             'id' => 'test-id',
-            'metrics' => ['first-contentful-paint' => 1.2],
+            'metrics' => ['first-contentful-paint' => [
+                'percentile' => 12,
+                'category' => 'good',
+                'distributions' => [],
+            ]],
             'overall_category' => 'fast',
             'initial_url' => 'https://example.com',
         ];
@@ -32,7 +36,6 @@ class LoadingExperienceTest extends TestCase
         $loadingExperience = LoadingExperience::create($values);
 
         $this->assertSame($values['id'], $loadingExperience->id);
-        $this->assertSame($values['metrics'], $loadingExperience->metrics);
         $this->assertSame($values['overall_category'], $loadingExperience->overallCategory);
         $this->assertSame($values['initial_url'], $loadingExperience->initialUrl);
     }
@@ -43,8 +46,11 @@ class LoadingExperienceTest extends TestCase
 
         $values = [
             'id' => 'test-id',
-            'metrics' => ['first-contentful-paint' => 1.2],
-            'overall_category' => 'fast',
+            'metrics' => ['first-contentful-paint' => [
+                'percentile' => 12,
+                'category' => 'good',
+                'distributions' => [],
+            ]], 'overall_category' => 'fast',
         ];
 
         LoadingExperience::create($values);
@@ -56,8 +62,11 @@ class LoadingExperienceTest extends TestCase
 
         $values = [
             'id' => 123,
-            'metrics' => 'invalid',
-            'overall_category' => 'fast',
+            'metrics' => ['first-contentful-paint' => [
+                'percentile' => 12,
+                'category' => 'good',
+                'distributions' => [],
+            ]], 'overall_category' => 'fast',
             'initial_url' => 'https://example.com',
         ];
 

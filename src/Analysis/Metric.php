@@ -13,21 +13,43 @@ declare(strict_types=1);
 
 namespace PageSpeed\Api\Analysis;
 
-enum Metric: string
+use Webmozart\Assert\Assert;
+
+final readonly class Metric
 {
-    case FirstContentfulPaint = 'first-contentful-paint';
-    case LargestContentfulPaint = 'largest-contentful-paint';
-    case SpeedIndex = 'speed-index';
-    case TotalBlockingTime = 'total-blocking-time';
-    case CumulativeLayoutShift = 'cumulative-layout-shift';
-    case TimeToInteractive = 'interactive';
-    case MaxPotentialFid = 'max-potential-fid';
+    /**
+     * @param array<string, mixed> $distributions
+     */
+    public function __construct(
+        public string $id,
+        public int $percentile,
+        public array $distributions,
+        public string $category,
+    ) {
+    }
 
     /**
-     * @return list<string>
+     * @param array<string, mixed> $values
      */
-    public static function values(): array
+    public static function create(array $values): self
     {
-        return array_map(static fn (self $category) => $category->value, self::cases());
+        Assert::keyExists($values, 'id');
+        Assert::string($values['id']);
+
+        Assert::keyExists($values, 'percentile');
+        Assert::integer($values['percentile']);
+
+        Assert::keyExists($values, 'category');
+        Assert::string($values['category']);
+
+        Assert::keyExists($values, 'distributions');
+        Assert::isArray($values['distributions']);
+
+        return new self(
+            $values['id'],
+            $values['percentile'],
+            $values['distributions'],
+            $values['category'],
+        );
     }
 }

@@ -15,20 +15,13 @@ namespace PageSpeed\Api\Analysis;
 
 use Webmozart\Assert\Assert;
 
-final readonly class LighthouseCategoryResult
+final readonly class CategoryGroup
 {
-    /**
-     * @param list<AuditRef> $auditRefs
-     */
     public function __construct(
         public string $id,
         public string $title,
-        public float $score,
-        public array $auditRefs = [],
-        public ?string $description = null,
-        public ?string $manualDescription = null,
+        public ?string $description,
     ) {
-        Assert::allIsInstanceOf($auditRefs, AuditRef::class);
     }
 
     /**
@@ -42,26 +35,14 @@ final readonly class LighthouseCategoryResult
         Assert::keyExists($values, 'title');
         Assert::string($values['title']);
 
-        Assert::keyExists($values, 'score');
-        Assert::numeric($values['score']);
-
-        Assert::keyExists($values, 'auditRefs');
-        Assert::isArray($values['auditRefs']);
-        Assert::allIsArray($values['auditRefs']);
-
         $values['description'] ??= null;
+        Assert::keyExists($values, 'description');
         Assert::nullOrString($values['description']);
-
-        $values['manualDescription'] ??= null;
-        Assert::nullOrString($values['manualDescription']);
 
         return new self(
             $values['id'],
             $values['title'],
-            (float) $values['score'],
-            array_map(AuditRef::create(...), $values['auditRefs']),
             $values['description'],
-            $values['manualDescription'],
         );
     }
 }

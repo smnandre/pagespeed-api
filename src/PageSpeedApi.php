@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace PageSpeed\Api;
 
-use PageSpeed\Api\Analysis\Strategy;
 use PageSpeed\Api\Analysis\Category;
+use PageSpeed\Api\Analysis\Strategy;
 use SensitiveParameter;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;

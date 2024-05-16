@@ -24,62 +24,34 @@ class LoadingExperienceFactory
         $data = [
             'id' => 'test-id',
             'initial_url' => 'https://example.com',
+            'overall_category' => 'good',
             'metrics' => [
-                'overall_category' => 'good',
-                'metrics' => [
-                    'cumulative_layout_shift' => [
-                        'category' => 'good',
-                        'distribution' => [
-                            'good' => 0.1,
-                            'needs_improvement' => 0.2,
-                            'poor' => 0.3,
-                        ],
-                        'percentile' => 0.1,
+                'cumulative_layout_shift' => [
+                    'category' => 'good',
+                    'distributions' => [
                     ],
-                    'first_contentful_paint' => [
-                        'category' => 'good',
-                        'distribution' => [
-                            'good' => 0.1,
-                            'needs_improvement' => 0.2,
-                            'poor' => 0.3,
-                        ],
-                        'percentile' => 0.1,
+                    'percentile' => 4,
+                ],
+                'first_contentful_paint' => [
+                    'category' => 'good',
+                    'distributions' => [
                     ],
-                    'first_input_delay' => [
-                        'category' => 'good',
-                        'distribution' => [
-                            'good' => 0.1,
-                            'needs_improvement' => 0.2,
-                            'poor' => 0.3,
-                        ],
-                        'percentile' => 0.1,
+                    'percentile' => 4,
+                ],
+                'first_input_delay' => [
+                    'category' => 'good',
+                    'distributions' => [
                     ],
-                    'largest_contentful_paint' => [
-                        'category' => 'good',
-                        'distribution' => [
-                            'good' => 0.1,
-                            'needs_improvement' => 0.2,
-                            'poor' => 0.3,
-                        ],
-                        'percentile' => 0.1,
+                    'percentile' => 4,
+                ],
+                'largest_contentful_paint' => [
+                    'category' => 'good',
+                    'distributions' => [
                     ],
-                    'performance_category' => 'good',
+                    'percentile' => 4,
                 ],
             ],
             'origin_fallback' => true,
-            'overall_category' => 'good',
-            'overall_category_rank' => 1,
-            'overall_percentile' => 0.1,
-            'overall_statistics' => [
-                'percentile' => 0.1,
-                'category' => 'good',
-                'distributions' => [
-                    'good' => 0.1,
-                    'needs_improvement' => 0.2,
-                    'poor' => 0.3,
-                ],
-            ],
-            'url' => 'https://example.com',
         ];
 
         return array_replace_recursive($data, $parameters);
