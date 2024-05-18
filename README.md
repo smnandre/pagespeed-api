@@ -1,8 +1,9 @@
 # 🚀 PageSpeed PHP API Client
 
+
 <a href="https://github.com/smnandre/pagespeed-api/actions"><img alt="javscript-action status" src="https://github.com/smnandre/pagespeed-api/actions/workflows/CI.yaml/badge.svg"></a>
 <a href="https://img.shields.io/github/v/release/smnandre/pagespeed-api"><img alt="release" src="https://img.shields.io/github/v/release/smnandre/pagespeed-api"></a>
-<a href="https://img.shields.io/github/license/smnandre/pagespeed-api"><img alt="license" src="https://img.shields.io/github/license/smnandre/pagespeed-api"></a>
+<a href="https://img.shields.io/github/license/smnandre/pagespeed-api"><img alt="license" src="https://img.shields.io/github/license/smnandre/pagespeed-api?color=cc67ff"></a>
 
 This PHP library offers an effortless way to leverage Google's PageSpeed Insights API. 
 
