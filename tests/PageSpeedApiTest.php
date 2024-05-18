@@ -22,13 +22,17 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\JsonMockResponse;
+use Symfony\Component\HttpClient\Response\MockResponse;
 
 #[CoversClass(PageSpeedApi::class)]
 class PageSpeedApiTest extends TestCase
 {
     public function testAnalysis(): void
     {
-        $response = JsonMockResponse::fromFile(__DIR__.'/Fixtures/response/example.com.json');
+        $response = new MockResponse(
+            file_get_contents(__DIR__.'/Fixtures/response/example.com.json'),
+            ['response_headers' => ['content-type' => 'application/json']],
+        );
         $api = new PageSpeedApi('API_KEY', new MockHttpClient($response));
 
         $analysis = $api->analyse('https://example.com');
@@ -79,7 +83,10 @@ class PageSpeedApiTest extends TestCase
 
     public function testAnalyseReturnsCorrectValues(): void
     {
-        $response = JsonMockResponse::fromFile(__DIR__.'/Fixtures/response/example.com.json');
+        $response = new MockResponse(
+            file_get_contents(__DIR__.'/Fixtures/response/example.com.json'),
+            ['response_headers' => ['content-type' => 'application/json']],
+        );
         $api = new PageSpeedApi('API_KEY', new MockHttpClient($response));
 
         $analysis = $api->analyse('https://example.com', Strategy::Desktop, 'en_US', [Category::Performance]);
