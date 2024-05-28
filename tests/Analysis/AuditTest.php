@@ -11,14 +11,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Analysis;
+namespace PageSpeed\Api\Tests\Analysis;
 
 use PageSpeed\Api\Analysis\Audit;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Audit::class)]
-
 final class AuditTest extends TestCase
 {
     public function testCanBeCreatedFromValues(): void
@@ -38,16 +37,16 @@ final class AuditTest extends TestCase
 
         $audit = Audit::create($values);
 
-        $this->assertSame($values['id'], $audit->id);
-        $this->assertSame($values['title'], $audit->title);
-        $this->assertSame($values['description'], $audit->description);
-        $this->assertSame($values['score'], $audit->score);
-        $this->assertSame($values['scoreDisplayMode'], $audit->scoreDisplayMode);
-        $this->assertSame($values['displayValue'], $audit->displayValue);
-        $this->assertSame($values['details'], $audit->details);
-        $this->assertSame($values['numericValue'], $audit->numericValue);
-        $this->assertSame($values['numericUnit'], $audit->numericUnit);
-        $this->assertSame($values['warnings'], $audit->warnings);
+        self::assertSame($values['id'], $audit->id);
+        self::assertSame($values['title'], $audit->title);
+        self::assertSame($values['description'], $audit->description);
+        self::assertSame($values['score'], $audit->score);
+        self::assertSame($values['scoreDisplayMode'], $audit->scoreDisplayMode);
+        self::assertSame($values['displayValue'], $audit->displayValue);
+        self::assertSame($values['details'], $audit->details);
+        self::assertSame($values['numericValue'], $audit->numericValue);
+        self::assertSame($values['numericUnit'], $audit->numericUnit);
+        self::assertSame($values['warnings'], $audit->warnings);
     }
 
     public function testCanBeCreatedWithDefaultValues(): void
@@ -61,21 +60,21 @@ final class AuditTest extends TestCase
 
         $audit = Audit::create($values);
 
-        $this->assertSame($values['id'], $audit->id);
-        $this->assertSame($values['title'], $audit->title);
-        $this->assertSame($values['description'], $audit->description);
-        $this->assertNull($audit->score);
-        $this->assertSame($values['scoreDisplayMode'], $audit->scoreDisplayMode);
-        $this->assertNull($audit->displayValue);
-        $this->assertNull($audit->details);
-        $this->assertNull($audit->numericValue);
-        $this->assertNull($audit->numericUnit);
-        $this->assertNull($audit->warnings);
+        self::assertSame($values['id'], $audit->id);
+        self::assertSame($values['title'], $audit->title);
+        self::assertSame($values['description'], $audit->description);
+        self::assertNull($audit->score);
+        self::assertSame($values['scoreDisplayMode'], $audit->scoreDisplayMode);
+        self::assertNull($audit->displayValue);
+        self::assertNull($audit->details);
+        self::assertNull($audit->numericValue);
+        self::assertNull($audit->numericUnit);
+        self::assertNull($audit->warnings);
     }
 
     public function testFailsWithMissingValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 'test-id',
@@ -87,7 +86,7 @@ final class AuditTest extends TestCase
 
     public function testFailsWithInvalidValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 123,
@@ -107,7 +106,7 @@ final class AuditTest extends TestCase
 
     public function testCreationFailsWithMissingValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 'test-id',
@@ -119,7 +118,7 @@ final class AuditTest extends TestCase
 
     public function testCreationFailsWithInvalidValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 123,

@@ -30,9 +30,9 @@ final class CategoryGroupTest extends TestCase
 
         $categoryGroup = CategoryGroup::create($values);
 
-        $this->assertSame($values['id'], $categoryGroup->id);
-        $this->assertSame($values['title'], $categoryGroup->title);
-        $this->assertSame($values['description'], $categoryGroup->description);
+        self::assertSame($values['id'], $categoryGroup->id);
+        self::assertSame($values['title'], $categoryGroup->title);
+        self::assertSame($values['description'], $categoryGroup->description);
     }
 
     public function testGroupCanBeCreatedWithNullDescription(): void
@@ -44,14 +44,14 @@ final class CategoryGroupTest extends TestCase
 
         $categoryGroup = CategoryGroup::create($values);
 
-        $this->assertSame($values['id'], $categoryGroup->id);
-        $this->assertSame($values['title'], $categoryGroup->title);
-        $this->assertNull($categoryGroup->description);
+        self::assertSame($values['id'], $categoryGroup->id);
+        self::assertSame($values['title'], $categoryGroup->title);
+        self::assertNull($categoryGroup->description);
     }
 
     public function testGroupCreationFailsWithMissingValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 'test-id',
@@ -62,7 +62,7 @@ final class CategoryGroupTest extends TestCase
 
     public function testGroupCreationFailsWithInvalidValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 123,

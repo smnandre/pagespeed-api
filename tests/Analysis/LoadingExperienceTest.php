@@ -35,14 +35,14 @@ class LoadingExperienceTest extends TestCase
 
         $loadingExperience = LoadingExperience::create($values);
 
-        $this->assertSame($values['id'], $loadingExperience->id);
-        $this->assertSame($values['overall_category'], $loadingExperience->overallCategory);
-        $this->assertSame($values['initial_url'], $loadingExperience->initialUrl);
+        self::assertSame($values['id'], $loadingExperience->id);
+        self::assertSame($values['overall_category'], $loadingExperience->overallCategory);
+        self::assertSame($values['initial_url'], $loadingExperience->initialUrl);
     }
 
     public function testCreationFailsWithMissingValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 'test-id',
@@ -58,7 +58,7 @@ class LoadingExperienceTest extends TestCase
 
     public function testExperienceCreationFailsWithInvalidValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 123,

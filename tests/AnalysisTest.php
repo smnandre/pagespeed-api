@@ -48,22 +48,22 @@ class AnalysisTest extends TestCase
             'accessibility' => 95,
         ];
 
-        $this->assertSame($expectedScores, $analysis->getAuditScores());
+        self::assertSame($expectedScores, $analysis->getAuditScores());
     }
 
-    public function auditScoresReturnsEmptyArrayWhenNoScores(): void
-    {
-        $values = AnalysisFactory::createData([
-            'id' => 'test-id',
-            'analysisUTCTimestamp' => '2022-01-01T00:00:00Z',
-            'lighthouseResult' => [
-                'categories' => [],
-            ],
-        ]);
-
-        $analysis = Analysis::create($values);
-
-        $this->assertSame([], $analysis->getAuditScores());
-    }
+    // public function auditScoresReturnsEmptyArrayWhenNoScores(): void
+    // {
+    //     $values = AnalysisFactory::createData([
+    //         'id' => 'test-id',
+    //         'analysisUTCTimestamp' => '2022-01-01T00:00:00Z',
+    //         'lighthouseResult' => [
+    //             'categories' => [],
+    //         ],
+    //     ]);
+    //
+    //     $analysis = Analysis::create($values);
+    //
+    //     self::assertSame([], $analysis->getAuditScores());
+    // }
 
 }

@@ -23,14 +23,14 @@ class StrategyTest extends TestCase
     public function testValues(): void
     {
         $values = Strategy::values();
-        $this->assertIsArray($values);
-        $this->assertContains('desktop', $values);
-        $this->assertContains('mobile', $values);
+        self::assertIsArray($values);
+        self::assertContains('desktop', $values);
+        self::assertContains('mobile', $values);
     }
 
     public function testValuesCount(): void
     {
         $values = Strategy::values();
-        $this->assertCount(2, $values);
+        self::assertCount(2, $values);
     }
 }

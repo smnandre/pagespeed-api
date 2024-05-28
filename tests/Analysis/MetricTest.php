@@ -31,15 +31,15 @@ class MetricTest extends TestCase
 
         $metric = Metric::create($values);
 
-        $this->assertSame($values['id'], $metric->id);
-        $this->assertSame($values['percentile'], $metric->percentile);
-        $this->assertSame($values['distributions'], $metric->distributions);
-        $this->assertSame($values['category'], $metric->category);
+        self::assertSame($values['id'], $metric->id);
+        self::assertSame($values['percentile'], $metric->percentile);
+        self::assertSame($values['distributions'], $metric->distributions);
+        self::assertSame($values['category'], $metric->category);
     }
 
     public function testCreationFailsWithMissingValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 'test-id',
@@ -52,7 +52,7 @@ class MetricTest extends TestCase
 
     public function testCreationFailsWithInvalidValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 123,

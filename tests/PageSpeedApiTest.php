@@ -21,7 +21,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
-use Symfony\Component\HttpClient\Response\JsonMockResponse;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
 #[CoversClass(PageSpeedApi::class)]
@@ -91,15 +90,15 @@ class PageSpeedApiTest extends TestCase
 
         $analysis = $api->analyse('https://example.com', Strategy::Desktop, 'en_US', [Category::Performance]);
 
-        $this->assertInstanceOf(Analysis::class, $analysis);
+        self::assertInstanceOf(Analysis::class, $analysis);
     }
 
     public function testAnalyseFailsWithInvalidUrl(): void
     {
         $api = new PageSpeedApi('API_KEY');
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid URL provided.');
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Invalid URL provided.');
 
         $api->analyse('invalid-url');
     }
@@ -108,8 +107,8 @@ class PageSpeedApiTest extends TestCase
     {
         $api = new PageSpeedApi('API_KEY');
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid strategy "invalid" provided.');
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Invalid strategy "invalid" provided.');
 
         $api->analyse('https://example.com', 'invalid');
     }
@@ -118,8 +117,8 @@ class PageSpeedApiTest extends TestCase
     {
         $api = new PageSpeedApi('API_KEY');
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid locale "invalid" provided.');
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Invalid locale "invalid" provided.');
 
         $api->analyse('https://example.com', Strategy::Desktop, 'invalid');
     }
@@ -128,8 +127,8 @@ class PageSpeedApiTest extends TestCase
     {
         $api = new PageSpeedApi('API_KEY');
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid category "invalid" provided.');
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Invalid category "invalid" provided.');
 
         /** @phpstan-ignore-next-line */
         $api->analyse('https://example.com', Strategy::Desktop, 'en_US', ['invalid']);

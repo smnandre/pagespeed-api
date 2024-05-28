@@ -18,7 +18,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AuditRef::class)]
-
 final class AuditRefTest extends TestCase
 {
     public function testCanBeCreatedFromValues(): void
@@ -33,11 +32,11 @@ final class AuditRefTest extends TestCase
 
         $auditRef = AuditRef::create($values);
 
-        $this->assertSame($values['id'], $auditRef->id);
-        $this->assertSame($values['weight'], $auditRef->weight);
-        $this->assertSame($values['group'], $auditRef->group);
-        $this->assertSame($values['acronym'], $auditRef->acronym);
-        $this->assertSame($values['relevantAudits'], $auditRef->relevantAudits);
+        self::assertSame($values['id'], $auditRef->id);
+        self::assertSame($values['weight'], $auditRef->weight);
+        self::assertSame($values['group'], $auditRef->group);
+        self::assertSame($values['acronym'], $auditRef->acronym);
+        self::assertSame($values['relevantAudits'], $auditRef->relevantAudits);
     }
 
     public function testCanBeCreatedWithDefaultValues(): void
@@ -49,16 +48,16 @@ final class AuditRefTest extends TestCase
 
         $auditRef = AuditRef::create($values);
 
-        $this->assertSame($values['id'], $auditRef->id);
-        $this->assertSame($values['weight'], $auditRef->weight);
-        $this->assertNull($auditRef->group);
-        $this->assertNull($auditRef->acronym);
-        $this->assertNull($auditRef->relevantAudits);
+        self::assertSame($values['id'], $auditRef->id);
+        self::assertSame($values['weight'], $auditRef->weight);
+        self::assertNull($auditRef->group);
+        self::assertNull($auditRef->acronym);
+        self::assertNull($auditRef->relevantAudits);
     }
 
     public function testCreationFailsWithInvalidValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 123,

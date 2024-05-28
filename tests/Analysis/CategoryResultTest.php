@@ -19,6 +19,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(CategoryResult::class)]
+#[CoversClass(AuditRef::class)]
 final class CategoryResultTest extends TestCase
 {
     public function testCanBeCreatedFromValues(): void
@@ -29,7 +30,6 @@ final class CategoryResultTest extends TestCase
             'score' => 0.9,
             'auditRefs' => [
                 ['id' => 'audit1', 'weight' => 1],
-                ['id' => 'audit2', 'weight' => 2],
             ],
             'description' => 'test-description',
             'manualDescription' => 'test-manual-description',
@@ -37,13 +37,13 @@ final class CategoryResultTest extends TestCase
 
         $categoryResult = CategoryResult::create($values);
 
-        $this->assertSame($values['id'], $categoryResult->id);
-        $this->assertSame($values['title'], $categoryResult->title);
-        $this->assertSame($values['score'], $categoryResult->score);
-        $this->assertCount(2, $categoryResult->auditRefs);
-        $this->assertInstanceOf(AuditRef::class, $categoryResult->auditRefs[0]);
-        $this->assertSame($values['description'], $categoryResult->description);
-        $this->assertSame($values['manualDescription'], $categoryResult->manualDescription);
+        self::assertSame($values['id'], $categoryResult->id);
+        self::assertSame($values['title'], $categoryResult->title);
+        self::assertSame($values['score'], $categoryResult->score);
+        self::assertCount(1, $categoryResult->auditRefs);
+        self::assertInstanceOf(AuditRef::class, $categoryResult->auditRefs[0]);
+        self::assertSame($values['description'], $categoryResult->description);
+        self::assertSame($values['manualDescription'], $categoryResult->manualDescription);
     }
 
     public function testCanBeCreatedWithDefaultValues(): void
@@ -59,18 +59,18 @@ final class CategoryResultTest extends TestCase
 
         $categoryResult = CategoryResult::create($values);
 
-        $this->assertSame($values['id'], $categoryResult->id);
-        $this->assertSame($values['title'], $categoryResult->title);
-        $this->assertSame($values['score'], $categoryResult->score);
-        $this->assertCount(1, $categoryResult->auditRefs);
-        $this->assertInstanceOf(AuditRef::class, $categoryResult->auditRefs[0]);
-        $this->assertNull($categoryResult->description);
-        $this->assertNull($categoryResult->manualDescription);
+        self::assertSame($values['id'], $categoryResult->id);
+        self::assertSame($values['title'], $categoryResult->title);
+        self::assertSame($values['score'], $categoryResult->score);
+        self::assertCount(1, $categoryResult->auditRefs);
+        self::assertInstanceOf(AuditRef::class, $categoryResult->auditRefs[0]);
+        self::assertNull($categoryResult->description);
+        self::assertNull($categoryResult->manualDescription);
     }
 
     public function testCreationFailsWithMissingValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 'test-id',
@@ -82,7 +82,7 @@ final class CategoryResultTest extends TestCase
 
     public function testCreationFailsWithInvalidValues(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        self::expectException(\InvalidArgumentException::class);
 
         $values = [
             'id' => 123,

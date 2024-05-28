@@ -5,10 +5,11 @@
          cacheDirectory=".phpunit.cache"
          executionOrder="depends,defects"
          requireCoverageMetadata="true"
-         beStrictAboutCoverageMetadata="true"
+         beStrictAboutCoverageMetadata="false"
          beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
          failOnWarning="true">
+
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>

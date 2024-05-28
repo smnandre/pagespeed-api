@@ -40,7 +40,7 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
         }
 
         if (is_string($strategy)) {
-            if (!in_array($strategy, Strategy::values())) {
+            if (null === Strategy::tryFrom($strategy)) {
                 throw new \InvalidArgumentException(sprintf('Invalid strategy "%s" provided.', $strategy));
             }
             $strategy = Strategy::from($strategy);
@@ -52,7 +52,7 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
 
         foreach ($categories as $i => $category) {
             if (!$category instanceof Category) {
-                if (!in_array($category, Strategy::values())) {
+                if (null === Category::tryFrom($category)) {
                     throw new \InvalidArgumentException(sprintf('Invalid category "%s" provided.', $category));
                 }
                 $categories[$i] = Category::from($category);

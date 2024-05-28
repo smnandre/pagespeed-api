@@ -23,16 +23,16 @@ class CategoryTest extends TestCase
     public function testValues(): void
     {
         $values = Category::values();
-        $this->assertIsArray($values);
-        $this->assertContains('accessibility', $values);
-        $this->assertContains('best-practices', $values);
-        $this->assertContains('performance', $values);
-        $this->assertContains('seo', $values);
+        self::assertIsArray($values);
+        self::assertContains('accessibility', $values);
+        self::assertContains('best-practices', $values);
+        self::assertContains('performance', $values);
+        self::assertContains('seo', $values);
     }
 
     public function testValuesCount(): void
     {
         $values = Category::values();
-        $this->assertCount(4, $values);
+        self::assertCount(4, $values);
     }
 }
