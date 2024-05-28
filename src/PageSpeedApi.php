@@ -69,7 +69,6 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
             'url' => $url,
             'strategy' => $strategy?->value,
             'locale' => $locale,
-            'category' => $category,
         ]);
 
         return Analysis::create($response);
