@@ -1,18 +1,18 @@
 # 🚀 PageSpeed PHP API Client
 
 
-<a href="https://github.com/smnandre/pagespeed-api/actions"><img alt="javscript-action status" src="https://github.com/smnandre/pagespeed-api/actions/workflows/CI.yaml/badge.svg"></a>
-<a href="https://img.shields.io/github/v/release/smnandre/pagespeed-api"><img alt="release" src="https://img.shields.io/github/v/release/smnandre/pagespeed-api"></a>
-<a href="https://img.shields.io/github/license/smnandre/pagespeed-api"><img alt="license" src="https://img.shields.io/github/license/smnandre/pagespeed-api?color=cc67ff"></a>
+<a href="https://github.com/smnandre/pagespeed-api/actions"><img alt="javscript-action status" src="https://github.com/smnandre/pagespeed-api/actions/workflows/CI.yaml/badge.svg"></a> 
+<a href="https://img.shields.io/github/v/release/smnandre/pagespeed-api"><img alt="release" src="https://img.shields.io/github/v/release/smnandre/pagespeed-api"></a> 
+<a href="https://img.shields.io/github/license/smnandre/pagespeed-api"><img alt="license" src="https://img.shields.io/github/license/smnandre/pagespeed-api?color=cc67ff"></a> 
 <a href="https://codecov.io/gh/smnandre/pagespeed-api" ><img src="https://codecov.io/gh/smnandre/pagespeed-api/graph/badge.svg?token=RC8Z6F4SPC"/></a>
 
-This PHP library offers an effortless way to leverage Google's PageSpeed Insights API. 
+This PHP library offers an effortless way to leverage Google's [PageSpeed Insights](https://pagespeed.web.dev/) API. 
 
 Analyze your web pages for performance metrics, get detailed reports, and optimize your site with ease. 🚀
 
 ## Installation
 
-```bash
+```shell
 composer require smnandre/pagespeed-api
 ```
 
@@ -23,25 +23,45 @@ composer require smnandre/pagespeed-api
 ```php
 use PageSpeed\Api\PageSpeedApi;
 
-$api = new PageSpeedApi('YOUR_API');
+$analysis = (new PageSpeedApi())->analyse('https://www.example.com');
 
-$analysis = $api->analyse('https://www.example.com');
+// or with API key (optional)
+$analysis = (new PageSpeedApi('YOUR_API_KEY'))->analyse('https://www.example.com');
 ```
 
-### Get the results
+### Audit Scores 
 
 ```php
+use PageSpeed\Api\PageSpeedApi
 
-// LightHouse scores
-$analysis->getAuditScores();
-// 'performance' => 100,
-// 'accessibility' => 88,
-// 'best-practices' => 100,
-// 'seo' => 90
+$analysis = (new PageSpeedApi())->analyse('https://www.example.com');
 
-$analysis->getLoadingMetrics();
+$scores = $analysis->getAuditScores();
+// array (
+//   'performance' => 100,
+//   'accessibility' => 88,
+//   'best-practices' => 100,
+//   'seo' => 90,
+// )
+```
 
-$analysis->getOriginalLoadingMetrics();
+### Loading Metrics
+
+```php
+use PageSpeed\Api\PageSpeedApi
+
+$analysis = (new PageSpeedApi())->analyse('https://www.example.com');
+
+$metrics = $analysis->getLoadingMetrics();
+
+// array (
+//   'CUMULATIVE_LAYOUT_SHIFT_SCORE' => 'FAST',
+//   'EXPERIMENTAL_TIME_TO_FIRST_BYTE' => 'AVERAGE',
+//   'FIRST_CONTENTFUL_PAINT_MS' => 'FAST',
+//   'FIRST_INPUT_DELAY_MS' => 'FAST',
+//   'INTERACTION_TO_NEXT_PAINT' => 'FAST',
+//   'LARGEST_CONTENTFUL_PAINT_MS' => 'FAST',
+// )
 ```
 
 ### Parameters
@@ -61,7 +81,6 @@ $analysis = $api->analyse('https://example.com/', 'desktop');
 ```php
 $analysis = $api->analyse('https://example.com/', 'mobile', 'fr');
 ```
-
 
 ## Analysis
 
