@@ -101,7 +101,9 @@ jobs:
             -   name: "PHP: setup ${{ matrix.php-version }}"
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: ${{ matrix.php-version }}
+                  php-version: ${{ matrix.php-version }}
+                  coverage: xdebug
+                  ini-values: xdebug.mode=coverage
             -   name: "PHP: php matcher"
                 run: |
                     echo "::add-matcher::${{ runner.tool_cache }}/php.json"
@@ -119,10 +121,10 @@ jobs:
             -   name: "Composer: install"
                 run: composer install --prefer-dist --no-progress --no-suggest
             -   name: "PHPUnit: version"
-                run: vendor/bin/phpunit --version
+                run: ./vendor/bin/phpunit --version
             -   name: "PHPUnit: tests"
-                run: vendor/bin/phpunit #--coverage-text --coverage-clover=coverage.xml
-#            -   name: "Codecov: upload"
-#                uses: codecov/codecov-action@v4.0.1
-#                with:
-#                    token: ${{ secrets.CODECOV_TOKEN }}
+                run: ./vendor/bin/phpunit --coverage-text --coverage-clover coverage.xml
+            -   name: "Codecov: upload"
+                uses: codecov/codecov-action@v4.0.1
+                with:
+                    token: ${{ secrets.CODECOV_TOKEN }}
