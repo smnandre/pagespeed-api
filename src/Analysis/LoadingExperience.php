@@ -73,7 +73,6 @@ final readonly class LoadingExperience
      */
     public function getMetrics(): array
     {
-        /** @phpstan-ignore-next-line */
-        return array_map(fn (array $metric) => $metric['category'], $this->metrics);
+        return array_map(fn (Metric $metric) => $metric->category, $this->metrics);
     }
 }
