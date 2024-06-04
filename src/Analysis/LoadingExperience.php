@@ -52,9 +52,6 @@ final readonly class LoadingExperience
 
         $metrics = [];
         foreach ($values['metrics'] as $id => $metric) {
-            if (!is_array($metric)) {
-                dd($values);
-            }
             Assert::isArray($metric);
             $metrics[$id] = ['id' => $id, ...$metric];
         }
