@@ -95,7 +95,7 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
         ]);
 
         if (200 !== $response->getStatusCode()) {
-            throw new \RuntimeException('Unexpected response code "%s" returned by PageSpeed Api.', $response->getStatusCode());
+            throw new \RuntimeException(sprintf('Unexpected response code "%s" returned by PageSpeed Api.', $response->getStatusCode()));
         }
 
         return $response->toArray();
