@@ -20,22 +20,29 @@ use PageSpeed\Api\PageSpeedApi;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
 #[CoversClass(PageSpeedApi::class)]
 class PageSpeedApiTest extends TestCase
 {
+    private static string $responseJson;
+
+    public static function setUpBeforeClass(): void
+    {
+        if (false === $responseJson = file_get_contents(__DIR__.'/Fixtures/response/example.com.json')) {
+            throw new \RuntimeException('Failed to read response fixture.');
+        }
+        self::$responseJson = $responseJson;
+    }
+
     public function testAnalysis(): void
     {
-        $response = new MockResponse(
-            file_get_contents(__DIR__.'/Fixtures/response/example.com.json'),
-            ['response_headers' => ['content-type' => 'application/json']],
-        );
+        $response = new MockResponse(self::$responseJson, ['response_headers' => ['content-type' => 'application/json']]);
         $api = new PageSpeedApi('API_KEY', new MockHttpClient($response));
 
         $analysis = $api->analyse('https://example.com');
-
 
         // $weakMap = new \WeakMap();
         // foreach ($result->categoryGroups as $categoryGroup) {
@@ -82,10 +89,7 @@ class PageSpeedApiTest extends TestCase
 
     public function testAnalyseReturnsCorrectValues(): void
     {
-        $response = new MockResponse(
-            file_get_contents(__DIR__.'/Fixtures/response/example.com.json'),
-            ['response_headers' => ['content-type' => 'application/json']],
-        );
+        $response = new MockResponse(self::$responseJson, ['response_headers' => ['content-type' => 'application/json']]);
         $api = new PageSpeedApi('API_KEY', new MockHttpClient($response));
 
         $analysis = $api->analyse('https://example.com', Strategy::Desktop, 'en_US', [Category::Performance]);
@@ -132,5 +136,35 @@ class PageSpeedApiTest extends TestCase
 
         /** @phpstan-ignore-next-line */
         $api->analyse('https://example.com', Strategy::Desktop, 'en_US', ['invalid']);
+    }
+
+    public function testItConvertsStringToStrategy(): void
+    {
+        $response = new MockResponse(self::$responseJson, ['response_headers' => ['content-type' => 'application/json']]);
+        $api = new PageSpeedApi('API_KEY', new MockHttpClient($response));
+
+        $analysis = $api->analyse('https://example.com', 'desktop');
+
+        self::assertInstanceOf(Analysis::class, $analysis);
+    }
+
+    public function testItConvertsStringToCategory(): void
+    {
+        $response = new MockResponse(self::$responseJson, ['response_headers' => ['content-type' => 'application/json']]);
+        $api = new PageSpeedApi('API_KEY', new MockHttpClient($response));
+
+        $analysis = $api->analyse('https://example.com', null, null, ['performance']);
+
+        self::assertInstanceOf(Analysis::class, $analysis);
+    }
+
+    public function testItThrowsExceptionOnPageNotFound(): void
+    {
+        $response = new MockResponse('', ['http_code' => 404]);
+        $api = new PageSpeedApi('API_KEY', new MockHttpClient($response));
+
+        self::expectException(RuntimeException::class);
+
+        $analysis = $api->analyse('https://example.com', Strategy::Desktop, 'en_US');
     }
 }

@@ -33,4 +33,22 @@ class LighthouseResultTest extends TestCase
         self::assertSame($values['finalUrl'], $lighthouseResult->finalUrl);
         self::assertSame($values['lighthouseVersion'], $lighthouseResult->lighthouseVersion);
     }
+
+    public function testGetScores(): void
+    {
+        $values = LighthouseResultFactory::createData([
+            'categories' => [
+                'performance' => LighthouseCategoryResultFactory::createData([
+                    'score' => 0.45,
+                ]),
+            ],
+        ]);
+        $lighthouseResult = LighthouseResult::create($values);
+
+        $scores = $lighthouseResult->getScores();
+
+        self::assertNotEmpty($scores);
+        self::assertArrayHasKey('performance', $scores);
+        self::assertEquals(45, $scores['performance']);
+    }
 }

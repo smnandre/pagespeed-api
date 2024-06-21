@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PageSpeed\Api\Tests\Analysis;
 
 use PageSpeed\Api\Analysis\LoadingExperience;
+use PageSpeed\Api\Analysis\Metric;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -71,5 +72,38 @@ class LoadingExperienceTest extends TestCase
         ];
 
         LoadingExperience::create($values);
+    }
+
+    public function testLoadingExperienceReturnsCorrectMetrics(): void
+    {
+        $metrics = [
+            'first-contentful-paint' => Metric::create([
+                'id' => 'first-contentful-paint',
+                'category' => 'Performance',
+                'percentile' => 1000,
+                'distributions' => [],
+            ]),
+            'speed-index' => Metric::create([
+                'id' => 'speed-index',
+                'category' => 'Performance',
+                'percentile' => 1200,
+                'distributions' => [],
+            ]),
+        ];
+
+        $loadingExperience = new LoadingExperience(
+            'test-id',
+            $metrics,
+            'GOOD',
+            'https://example.com/',
+            false
+        );
+
+        $expectedMetrics = [
+            'first-contentful-paint' => 'Performance',
+            'speed-index' => 'Performance',
+        ];
+
+        self::assertSame($expectedMetrics, $loadingExperience->getMetrics());
     }
 }
