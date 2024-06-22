@@ -1,10 +1,10 @@
 # 🚀 PageSpeed PHP API Client
 
-
-<a href="https://github.com/smnandre/pagespeed-api/actions"><img alt="javscript-action status" src="https://github.com/smnandre/pagespeed-api/actions/workflows/CI.yaml/badge.svg"></a> 
-<a href="https://img.shields.io/github/v/release/smnandre/pagespeed-api"><img alt="release" src="https://img.shields.io/github/v/release/smnandre/pagespeed-api"></a> 
-<a href="https://img.shields.io/github/license/smnandre/pagespeed-api"><img alt="license" src="https://img.shields.io/github/license/smnandre/pagespeed-api?color=cc67ff"></a> 
-<a href="https://codecov.io/gh/smnandre/pagespeed-api" ><img src="https://codecov.io/gh/smnandre/pagespeed-api/graph/badge.svg?token=RC8Z6F4SPC"/></a>
+[![PHP Version](https://img.shields.io/badge/%C2%A0php-%3E%3D%208.3-777BB4.svg?logo=php&logoColor=white)](https://github.com/smnandre/pagespeed-api/blob/main/composer.json)
+[![CI](https://github.com/smnandre/pagespeed-api/actions/workflows/CI.yaml/badge.svg)](https://github.com/smnandre/pagespeed-api/actions)
+[![Release](https://img.shields.io/github/v/release/smnandre/pagespeed-api)](https://github.com/smnandre/pagespeed-api/releases)
+[![License](https://img.shields.io/github/license/smnandre/pagespeed-api?color=cc67ff)](https://github.com/smnandre/pagespeed-api/blob/main/LICENSE)
+[![Codecov](https://codecov.io/gh/smnandre/pagespeed-api/graph/badge.svg?token=RC8Z6F4SPC)](https://codecov.io/gh/smnandre/pagespeed-api)
 
 This PHP library offers an effortless way to leverage Google's [PageSpeed Insights](https://pagespeed.web.dev/) API. 
 
@@ -18,25 +18,54 @@ composer require smnandre/pagespeed-api
 
 ## Usage
 
-### Run an analysis
+### Initialize the API
 
 ```php
 use PageSpeed\Api\PageSpeedApi;
 
-$analysis = (new PageSpeedApi())->analyse('https://www.example.com');
+$pageSpeedApi = new PageSpeedApi();
 
 // or with API key (optional)
-$analysis = (new PageSpeedApi('YOUR_API_KEY'))->analyse('https://www.example.com');
+$pageSpeedApi = new PageSpeedApi('YOUR_API_KEY');
 ```
 
-### Audit Scores 
+### Run analysis
 
 ```php
-use PageSpeed\Api\PageSpeedApi
+// Analyze a page
+$analysis = $pageSpeedApi->analyse('https://example.com/');
 
-$analysis = (new PageSpeedApi())->analyse('https://www.example.com');
+// ...with a specific strategy (mobile or desktop)
+$analysis = $pageSpeedApi->analyse('https://example.com/', 'mobile');
+
+// ...with a specific locale (e.g., fr_FR)
+$analysis = $pageSpeedApi->analyse('https://example.com/', locale: 'fr_FR');
+
+// ...with a specific category (performance, accessibility, best-practices, seo)
+$analysis = $pageSpeedApi->analyse('https://example.com/', categories: 'performance');
+```
+
+#### Parameters
+
+| Parameter | Description                                                              | Default |
+|-----------|--------------------------------------------------------------------------|---------|
+| `url`     | The URL of the page to analyze.                                          | - |
+| `strategy` | The analysis strategy to use. Possible values are `mobile` or `desktop`. | `mobile` |
+| `locale` | The locale to use for the analysis.                                      | `en` |
+| `categories` | The categories to analyze. If not specified, all categories will be analyzed. | - |
+
+## Audit Scores
+
+![audit-scores.png](docs/audit-scores.png)
+
+```php
+use PageSpeed\Api\PageSpeedApi;
+
+$pageSpeedApi = new PageSpeedApi();
+$analysis = $pageSpeedApi->analyse('https://www.example.com');
 
 $scores = $analysis->getAuditScores();
+
 // array (
 //   'performance' => 100,
 //   'accessibility' => 88,
@@ -45,12 +74,36 @@ $scores = $analysis->getAuditScores();
 // )
 ```
 
+### Audit categories
+
+| #  | Category           | Description                                                                          |
+|----|--------------------|--------------------------------------------------------------------------------------|
+| ⚡  | **Performance**    | Measures how quickly the content on your page loads and becomes interactive.         |
+| 🌍 | **Accessibility**  | Evaluates how accessible your page is to users, including those with disabilities.   |
+| 🏆 | **Best Practices** | Assesses your page against established web development best practices.               |
+| ⚓  | **SEO**            | Analyzes your page's search engine optimization, ensuring it follows SEO guidelines. |
+
+
+### Score Evaluation
+
+| Min | Max | ⬜️                     | Description       | 
+|-----|-----|------------------------|-------------------|
+| 0   | 49  | 🟥🟥🟥🟥🟥⬜️⬜️⬜️⬜️⬜️ | Poor              | 
+| 50  | 89  | 🟧🟧🟧🟧🟧🟧🟧🟧🟧️⬜️️ | Needs improvement |
+| 90  | 100 | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 | Good              |
+
+
+## Core Web Vitals
+
+![core-web-vitals.png](docs/core-web-vitals.png)
+
 ### Loading Metrics
 
 ```php
-use PageSpeed\Api\PageSpeedApi
+use PageSpeed\Api\PageSpeedApi;
 
-$analysis = (new PageSpeedApi())->analyse('https://www.example.com');
+$pageSpeedApi = new PageSpeedApi();
+$analysis = $pageSpeedApi->analyse('https://www.example.com');
 
 $metrics = $analysis->getLoadingMetrics();
 
@@ -63,36 +116,6 @@ $metrics = $analysis->getLoadingMetrics();
 //   'LARGEST_CONTENTFUL_PAINT_MS' => 'FAST',
 // )
 ```
-
-### Parameters
-
-#### Strategy	
-
-```php
-// Mobile strategy (default)
-$analysis = $api->analyse('https://example.com/', 'mobile');
-
-// Desktop strategy
-$analysis = $api->analyse('https://example.com/', 'desktop');
-```
-
-#### Locale
-
-```php
-$analysis = $api->analyse('https://example.com/', 'mobile', 'fr');
-```
-
-## Analysis
-
-### Audit categories
-
-| # | Category           | Description                                                                                  |
-|------|--------------------|----------------------------------------------------------------------------------------------|
-| ⚡   | **Performance**    | Measures how quickly the content on your page loads and becomes interactive.                 |
-| 🌍   | **Accessibility**  | Evaluates how accessible your page is to users, including those with disabilities.           |
-| 🏆   | **Best Practices** | Assesses your page against established web development best practices.                       |
-| ⚓   | **SEO**            | Analyzes your page's search engine optimization, ensuring it follows SEO guidelines.         |
-| 📱   | **PWA**            | Checks if your page meets the criteria for a Progressive Web App, providing a native-like experience. |
 
 ### Main Metrics
 
@@ -108,7 +131,7 @@ $analysis = $api->analyse('https://example.com/', 'mobile', 'fr');
 
 ## Contributing
 
-Contributions are welcome! If you would like to contribute, please fork the repository and submit a pull request. For major changes, please open an issue to discuss what you would like to change.
+Contributions are welcome! If you would like to contribute, please fork the repository and submit a pull request. 
 
 ## License
 
