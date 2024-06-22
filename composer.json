@@ -1,18 +1,19 @@
 {
     "name": "smnandre/pagespeed-api",
-    "description": "PageSpeed Insights API Client",
+    "description": "PageSpeed Insight PHP Api Client 🚀 Analyse web pages for performances metrics, core web vitals... ",
     "license": "MIT",
     "type": "library",
     "keywords": [
         "pagespeed",
         "google",
-        "php",
         "api",
         "client",
         "insights",
+        "page-speed-insights",
+        "core-web-vitals",
         "lightouse",
-        "seo",
-        "performance"
+        "performance",
+        "seo"
     ],
     "authors": [
         {
@@ -29,8 +30,8 @@
         "friendsofphp/php-cs-fixer": "^3.56",
         "phpunit/phpunit": "^11.2"
     },
-    "prefer-stable": true,
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "PageSpeed\\Api\\": "src/"
