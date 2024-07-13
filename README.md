@@ -122,11 +122,10 @@ $metrics = $analysis->getLoadingMetrics();
 | # | Abbr | Metric                        | Description                                                                                      |
 |------|--------------|-------------------------------|--------------------------------------------------------------------------------------------------|
 | 🖼️   | **FCP**      | **First Contentful Paint**    | Time taken for the first piece of content to appear on the screen.                                |
-| ⏱️   | **TTI**      | **Time to Interactive**       | Time taken for the page to become fully interactive.                                              |
 | 📏   | **SI**       | **Speed Index**               | How quickly the contents of a page are visibly populated.                                         |
 | 📊   | **CLS**      | **Cumulative Layout Shift**   | Measure of visual stability; the sum of all individual layout shift scores.                        |
 | ⏳   | **LCP**      | **Largest Contentful Paint**  | Time taken for the largest content element to appear.                                             |
-| ⛔   | **TBT**      | **Total Blocking Time**       | Total time that the main thread was blocked, preventing user interaction.                          |
+| ⏱️ | **INP** | Interaction to Next Paint | The time from when a user interacts with a page (e.g., clicks a button) to the next time the page visually updates in response to that interaction. |
 
 
 ## Contributing
