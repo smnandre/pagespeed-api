@@ -123,6 +123,7 @@ $metrics = $analysis->getLoadingMetrics();
 |------|--------------|-------------------------------|--------------------------------------------------------------------------------------------------|
 | 🖼️   | **FCP**      | **First Contentful Paint**    | Time taken for the first piece of content to appear on the screen.                                |
 | 📏   | **SI**       | **Speed Index**               | How quickly the contents of a page are visibly populated.                                         |
+| 📏   | **FID**       | **First Input Delay**               |      |
 | 📊   | **CLS**      | **Cumulative Layout Shift**   | Measure of visual stability; the sum of all individual layout shift scores.                        |
 | ⏳   | **LCP**      | **Largest Contentful Paint**  | Time taken for the largest content element to appear.                                             |
 | ⏱️ | **INP** | Interaction to Next Paint | The time from when a user interacts with a page (e.g., clicks a button) to the next time the page visually updates in response to that interaction. |
