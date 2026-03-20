@@ -47,7 +47,7 @@ final readonly class ConfigSettings
         Assert::string($values['formFactor']);
 
         return new self(
-            $values['onlyCategories'],
+            array_values($values['onlyCategories']),
             $values['locale'],
             $values['channel'],
             $values['formFactor'],

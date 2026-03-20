@@ -28,7 +28,6 @@ final readonly class CategoryResult
         public ?string $description = null,
         public ?string $manualDescription = null,
     ) {
-        Assert::allIsInstanceOf($auditRefs, AuditRef::class);
     }
 
     /**
