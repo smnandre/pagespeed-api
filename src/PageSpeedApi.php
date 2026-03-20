@@ -33,6 +33,9 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
         $this->client = $client ?? HttpClient::create();
     }
 
+    /**
+     * @param list<Category|string> $categories
+     */
     public function analyse(string $url, Strategy|string|null $strategy = null, ?string $locale = null, array $categories = []): Analysis
     {
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
@@ -50,20 +53,23 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
             throw new \InvalidArgumentException(sprintf('Invalid locale "%s" provided.', $locale));
         }
 
-        foreach ($categories as $i => $category) {
-            if (!$category instanceof Category) {
+        $resolvedCategories = [];
+        foreach ($categories as $category) {
+            if ($category instanceof Category) {
+                $resolvedCategories[] = $category;
+            } else {
                 if (null === Category::tryFrom($category)) {
                     throw new \InvalidArgumentException(sprintf('Invalid category "%s" provided.', $category));
                 }
-                $categories[$i] = Category::from($category);
+                $resolvedCategories[] = Category::from($category);
             }
         }
-        if([] === $categories = array_unique($categories)) {
-            $categories = Category::cases();
+        if ([] === $resolvedCategories) {
+            $resolvedCategories = Category::cases();
         }
 
         // PageSpeed API uses multiple category parameters
-        $category =  array_map(fn (Category $cat) => strtoupper(str_replace('-', '_', $cat->value)), $categories);
+        $category = array_map(fn (Category $cat) => strtoupper(str_replace('-', '_', $cat->value)), $resolvedCategories);
 
         $response = $this->get('runPagespeed?category='.implode('&category=', $category), [
             'url' => $url,

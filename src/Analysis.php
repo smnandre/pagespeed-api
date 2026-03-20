@@ -39,14 +39,14 @@ final readonly class Analysis
 
         $values['loadingExperience'] ??= null;
         if (is_array($values['loadingExperience'])) {
-            if(array_key_exists('id', $values['loadingExperience'])) {
+            if (array_key_exists('id', $values['loadingExperience'])) {
                 $loadingExperience = LoadingExperience::create($values['loadingExperience']);
             }
         }
 
         $values['originLoadingExperience'] ??= null;
         if (is_array($values['originLoadingExperience'])) {
-            if(array_key_exists('id', $values['originLoadingExperience'])) {
+            if (array_key_exists('id', $values['originLoadingExperience'])) {
                 $originLoadingExperience = LoadingExperience::create($values['originLoadingExperience']);
             }
         }

@@ -49,12 +49,17 @@ final readonly class AuditRef
         $values['relevantAudits'] ??= null;
         Assert::nullOrIsArray($values['relevantAudits']);
 
+        $relevantAudits = $values['relevantAudits'];
+        if (is_array($relevantAudits)) {
+            $relevantAudits = array_values($relevantAudits);
+        }
+
         return new self(
             $values['id'],
             (int) $values['weight'],
             $values['group'],
             $values['acronym'],
-            $values['relevantAudits'],
+            $relevantAudits,
         );
     }
 }
