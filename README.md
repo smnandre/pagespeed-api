@@ -54,6 +54,39 @@ $analysis = $pageSpeedApi->analyse('https://example.com/', categories: 'performa
 | `locale` | The locale to use for the analysis.                                      | `en` |
 | `categories` | The categories to analyze. If not specified, all categories will be analyzed. | - |
 
+## Report
+
+A display-ready view of an analysis: category scores and Core Web Vitals reached by
+property, serialisable to array or JSON.
+
+```php
+use PageSpeed\Api\PageSpeedApi;
+
+$pageSpeedApi = new PageSpeedApi();
+$report = $pageSpeedApi->analyse('https://www.example.com')->report();
+
+// Scores (null when the category was not analysed)
+$report->performance->value;          // 88
+$report->performance->rating;         // Rating::NeedsImprovement
+$report->performance->rating->value;  // 'needs-improvement'
+$report->seo->value;                  // 90
+
+// Core Web Vitals (null when field data is unavailable)
+$report->lcp->value;   // 2300
+$report->lcp->unit;    // 'ms'
+$report->lcp->rating;  // Bucket::Fast
+
+// Serialise for a template, a CLI or an API
+$report->toArray();
+json_encode($report);
+```
+
+Scores (`performance`, `accessibility`, `bestPractices`, `seo`) expose `value` (0-100),
+`rating` (a `Rating` following the [Score Evaluation](#score-evaluation) thresholds), and
+`category` (`Category`). Metrics (`lcp`, `cls`, `inp`, `fcp`, `fid`, `ttfb`) expose `value`,
+`unit`, and `rating` (a `Bucket`: `Fast`, `Average` or `Slow`). Any property is `null` when
+the underlying data is absent.
+
 ## Audit Scores
 
 ![audit-scores.png](docs/audit-scores.png)
