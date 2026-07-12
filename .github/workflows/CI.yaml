@@ -63,12 +63,11 @@ jobs:
         steps:
             -   name: "Git: checkout"
                 uses: actions/checkout@v4
-            -   name: "PHP: setup ${{ matrix.php-version }}"
+            -   name: "PHP: setup 8.3"
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: '8.3'
                     coverage: none
-                    tools: phpstan
             -   name: "Composer: cache config"
                 id: composer-cache
                 run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
@@ -80,12 +79,12 @@ jobs:
                     restore-keys: ${{ runner.os }}-composer-
             -   name: "Composer: validate"
                 run: composer validate --strict
-            -   name: "Composer: install"
-                run: composer install --prefer-dist --no-progress --no-suggest
+            -   name: "Composer: update"
+                run: composer update --prefer-dist --no-progress
             -   name: "PHPStan: version"
-                run: phpstan --version
+                run: vendor/bin/phpstan --version
             -   name: "PHPStan: analyse"
-                run: phpstan analyse src/
+                run: vendor/bin/phpstan analyse
 
     tests:
         name: "Tests (PHP ${{ matrix.php-version }}, ${{ matrix.dependency-versions }} deps)"

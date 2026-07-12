@@ -23,7 +23,6 @@ class StrategyTest extends TestCase
     public function testValues(): void
     {
         $values = Strategy::values();
-        self::assertIsArray($values);
         self::assertContains('desktop', $values);
         self::assertContains('mobile', $values);
     }

@@ -46,7 +46,7 @@ final readonly class CategoryResult
 
         Assert::keyExists($values, 'auditRefs');
         Assert::isArray($values['auditRefs']);
-        Assert::allIsArray($values['auditRefs']);
+        Assert::allIsMap($values['auditRefs']);
 
         $values['description'] ??= null;
         Assert::nullOrString($values['description']);

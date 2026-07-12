@@ -49,23 +49,25 @@ final readonly class LighthouseResult
         Assert::string($values['lighthouseVersion']);
 
         Assert::keyExists($values, 'categoryGroups');
-        Assert::isArray($values['categoryGroups']);
+        Assert::isMap($values['categoryGroups']);
 
         Assert::keyExists($values, 'categories');
-        Assert::isArray($values['categories']);
+        Assert::isMap($values['categories']);
+        Assert::allIsMap($values['categories']);
 
         Assert::keyExists($values, 'audits');
-        Assert::isArray($values['audits']);
+        Assert::isMap($values['audits']);
+        Assert::allIsMap($values['audits']);
 
         Assert::keyExists($values, 'environment');
-        Assert::isArray($values['environment']);
+        Assert::isMap($values['environment']);
 
         Assert::keyExists($values, 'configSettings');
-        Assert::isArray($values['configSettings']);
+        Assert::isMap($values['configSettings']);
 
         $categoryGroups = [];
         foreach ($values['categoryGroups'] as $id => $group) {
-            Assert::isArray($group);
+            Assert::isMap($group);
             $categoryGroups[$id] = ['id' => $id, ...$group];
         }
 

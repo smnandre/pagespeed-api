@@ -36,7 +36,6 @@ final readonly class CategoryGroup
         Assert::string($values['title']);
 
         $values['description'] ??= null;
-        Assert::keyExists($values, 'description');
         Assert::nullOrString($values['description']);
 
         return new self(
