@@ -23,7 +23,6 @@ class CategoryTest extends TestCase
     public function testValues(): void
     {
         $values = Category::values();
-        self::assertIsArray($values);
         self::assertContains('accessibility', $values);
         self::assertContains('best-practices', $values);
         self::assertContains('performance', $values);

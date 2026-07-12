@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace PageSpeed\Api\Tests\Fixtures\Factory;
 
+use Webmozart\Assert\Assert;
+
 class EnvironmentFactory
 {
     /**
@@ -27,6 +29,9 @@ class EnvironmentFactory
             'benchmarkIndex' => 42,
         ];
 
-        return array_replace_recursive($data, $parameters);
+        $data = array_replace_recursive($data, $parameters);
+        Assert::isMap($data);
+
+        return $data;
     }
 }

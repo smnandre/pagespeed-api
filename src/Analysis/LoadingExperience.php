@@ -38,7 +38,7 @@ final readonly class LoadingExperience
         Assert::string($values['id']);
 
         Assert::keyExists($values, 'metrics');
-        Assert::isArray($values['metrics']);
+        Assert::isMap($values['metrics']);
 
         Assert::keyExists($values, 'overall_category');
         Assert::string($values['overall_category']);
@@ -47,12 +47,11 @@ final readonly class LoadingExperience
         Assert::string($values['initial_url']);
 
         $values['origin_fallback'] ??= null;
-        Assert::keyExists($values, 'origin_fallback');
         Assert::nullOrBoolean($values['origin_fallback']);
 
         $metrics = [];
         foreach ($values['metrics'] as $id => $metric) {
-            Assert::isArray($metric);
+            Assert::isMap($metric);
             $metrics[$id] = ['id' => $id, ...$metric];
         }
 

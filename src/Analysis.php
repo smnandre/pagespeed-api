@@ -40,6 +40,7 @@ final readonly class Analysis
         $values['loadingExperience'] ??= null;
         if (is_array($values['loadingExperience'])) {
             if (array_key_exists('id', $values['loadingExperience'])) {
+                Assert::isMap($values['loadingExperience']);
                 $loadingExperience = LoadingExperience::create($values['loadingExperience']);
             }
         }
@@ -47,6 +48,7 @@ final readonly class Analysis
         $values['originLoadingExperience'] ??= null;
         if (is_array($values['originLoadingExperience'])) {
             if (array_key_exists('id', $values['originLoadingExperience'])) {
+                Assert::isMap($values['originLoadingExperience']);
                 $originLoadingExperience = LoadingExperience::create($values['originLoadingExperience']);
             }
         }
@@ -55,7 +57,7 @@ final readonly class Analysis
         Assert::string($values['analysisUTCTimestamp']);
 
         Assert::keyExists($values, 'lighthouseResult');
-        Assert::isArray($values['lighthouseResult']);
+        Assert::isMap($values['lighthouseResult']);
 
         return new self(
             $values['id'],

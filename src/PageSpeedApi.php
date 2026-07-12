@@ -18,6 +18,7 @@ use PageSpeed\Api\Analysis\Strategy;
 use SensitiveParameter;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Webmozart\Assert\Assert;
 
 final readonly class PageSpeedApi implements PageSpeedApiInterface
 {
@@ -104,6 +105,9 @@ final readonly class PageSpeedApi implements PageSpeedApiInterface
             throw new \RuntimeException(sprintf('Unexpected response code "%s" returned by PageSpeed Api.', $response->getStatusCode()));
         }
 
-        return $response->toArray();
+        $data = $response->toArray();
+        Assert::isMap($data);
+
+        return $data;
     }
 }

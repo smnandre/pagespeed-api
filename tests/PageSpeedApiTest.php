@@ -134,7 +134,6 @@ class PageSpeedApiTest extends TestCase
         self::expectException(\InvalidArgumentException::class);
         self::expectExceptionMessage('Invalid category "invalid" provided.');
 
-        /** @phpstan-ignore-next-line */
         $api->analyse('https://example.com', Strategy::Desktop, 'en_US', ['invalid']);
     }
 

@@ -18,7 +18,7 @@ use Webmozart\Assert\Assert;
 final readonly class Metric
 {
     /**
-     * @param array<string, mixed> $distributions
+     * @param array<array-key, mixed> $distributions
      */
     public function __construct(
         public string $id,

@@ -52,6 +52,7 @@ final readonly class AuditRef
         $relevantAudits = $values['relevantAudits'];
         if (is_array($relevantAudits)) {
             $relevantAudits = array_values($relevantAudits);
+            Assert::allString($relevantAudits);
         }
 
         return new self(

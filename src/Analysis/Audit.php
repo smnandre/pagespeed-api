@@ -18,8 +18,8 @@ use Webmozart\Assert\Assert;
 final readonly class Audit
 {
     /**
-     * @param ?array<string, mixed> $details
-     * @param ?array<string, mixed> $warnings
+     * @param ?array<array-key, mixed> $details
+     * @param ?array<array-key, mixed> $warnings
      */
     public function __construct(
         public string $id,
