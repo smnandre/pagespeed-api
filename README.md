@@ -152,14 +152,14 @@ $metrics = $analysis->getLoadingMetrics();
 
 ### Main Metrics
 
-| # | Abbr | Metric                        | Description                                                                                      |
-|------|--------------|-------------------------------|--------------------------------------------------------------------------------------------------|
-| 🖼️   | **FCP**      | **First Contentful Paint**    | Time taken for the first piece of content to appear on the screen.                                |
-| 📏   | **SI**       | **Speed Index**               | How quickly the contents of a page are visibly populated.                                         |
-| 📏   | **FID**       | **First Input Delay**               |      |
-| 📊   | **CLS**      | **Cumulative Layout Shift**   | Measure of visual stability; the sum of all individual layout shift scores.                        |
-| ⏳   | **LCP**      | **Largest Contentful Paint**  | Time taken for the largest content element to appear.                                             |
-| ⏱️ | **INP** | Interaction to Next Paint | The time from when a user interacts with a page (e.g., clicks a button) to the next time the page visually updates in response to that interaction. |
+| Abbr | Metric | Description |
+|------|--------|-------------|
+| **FCP** | **First Contentful Paint** | Time taken for the first piece of content to appear on the screen. |
+| **SI** | **Speed Index** | How quickly the contents of a page are visibly populated. |
+| **FID** | **First Input Delay** | Time from a user's first interaction to when the browser can respond. |
+| **CLS** | **Cumulative Layout Shift** | Measure of visual stability; the sum of all individual layout shift scores. |
+| **LCP** | **Largest Contentful Paint** | Time taken for the largest content element to appear. |
+| **INP** | **Interaction to Next Paint** | Time from a user interaction to the next visual update in response. |
 
 
 ## Contributing
@@ -168,4 +168,4 @@ Contributions are welcome! If you would like to contribute, please fork the repo
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more information.
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
