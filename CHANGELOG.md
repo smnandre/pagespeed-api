@@ -4,7 +4,10 @@ All notable changes to this project are documented in this file, following [Keep
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-12
+
 ### Added
 
 - `Analysis::report()` returns a `Report` value object (scores + Core Web Vitals)
 - Support for webmozart/assert 2.x
+
