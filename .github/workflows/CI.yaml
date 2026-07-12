@@ -88,13 +88,20 @@ jobs:
                 run: phpstan analyse src/
 
     tests:
-        name: "Tests (PHP ${{ matrix.php-version }})"
+        name: "Tests (PHP ${{ matrix.php-version }}, ${{ matrix.dependency-versions }} deps)"
         runs-on: ubuntu-latest
         strategy:
-            matrix:
-                php-version:
-                    - '8.3'
             fail-fast: false
+            matrix:
+                include:
+                    -   php-version: '8.3'
+                        dependency-versions: 'lowest'
+                    -   php-version: '8.3'
+                        dependency-versions: 'highest'
+                    -   php-version: '8.4'
+                        dependency-versions: 'highest'
+                    -   php-version: '8.5'
+                        dependency-versions: 'highest'
         steps:
             -   name: "Git: Checkout"
                 uses: actions/checkout@v4
@@ -118,8 +125,12 @@ jobs:
                     restore-keys: ${{ runner.os }}-composer-
             -   name: "Composer: validate"
                 run: composer validate --strict
-            -   name: "Composer: install"
-                run: composer install --prefer-dist --no-progress --no-suggest
+            -   name: "Composer: update (lowest)"
+                if: matrix.dependency-versions == 'lowest'
+                run: composer update --prefer-lowest --prefer-dist --no-progress
+            -   name: "Composer: update (highest)"
+                if: matrix.dependency-versions == 'highest'
+                run: composer update --prefer-dist --no-progress
             -   name: "PHPUnit: version"
                 run: ./vendor/bin/phpunit --version
             -   name: "PHPUnit: tests"
