@@ -16,6 +16,7 @@ namespace PageSpeed\Api;
 use DateTimeImmutable;
 use PageSpeed\Api\Analysis\LighthouseResult;
 use PageSpeed\Api\Analysis\LoadingExperience;
+use PageSpeed\Api\Report\Report;
 use Webmozart\Assert\Assert;
 
 final readonly class Analysis
@@ -71,6 +72,11 @@ final readonly class Analysis
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function report(): Report
+    {
+        return Report::fromAnalysis($this);
     }
 
     /**

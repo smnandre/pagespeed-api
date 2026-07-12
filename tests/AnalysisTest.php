@@ -138,4 +138,17 @@ class AnalysisTest extends TestCase
         self::assertSame($expectedMetrics, $analysis->getOriginalLoadingMetrics());
     }
 
+    public function testReport(): void
+    {
+        $analysis = Analysis::create(AnalysisFactory::createData([
+            'lighthouseResult' => ['categories' => [
+                'performance' => LighthouseCategoryResultFactory::createData(['id' => 'performance', 'score' => 0.9]),
+            ]],
+        ]));
+
+        $report = $analysis->report();
+
+        self::assertNotNull($report->performance);
+        self::assertSame(90, $report->performance->value);
+    }
 }
